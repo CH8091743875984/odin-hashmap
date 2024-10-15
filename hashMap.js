@@ -32,31 +32,22 @@ class HashMap {
 
     node.updateOrAdd(key, value);
     this.resize();
-
-    //if bucket already is occupied
-    //and if key already exists, update value
-
-    // if (listBucket.find(hash(key)) === key) {
-    //   console.log("adding node");
-
-    // } else {
-    //   console.log("found conflict");
-    //   //otherwise we have a conflict, add at end of linked list
-    //if bucket not occupied, insert head of a linked list
-    // listBucket.add([key, value]);
   }
 
   get(key) {
     //takes one argument as a key and returns the value that is assigned to this key.
     //If a key is not found, return null.
     let bucket = this.buckets[this.hash(key)];
-
+    // console.log(bucket);
     if (bucket) {
-      if (bucket[0] === key) {
-        return bucket[1];
+      let node = bucket.find(key);
+      // console.log(node);
+
+      if (node) {
+        return node;
       }
-      return null;
     }
+    return null;
   }
 
   resize() {
@@ -151,3 +142,8 @@ console.log(test);
 console.log("Test: length");
 
 console.log(test.length());
+
+console.log("Test: get");
+console.log(test.get("kite"));
+console.log(test.get("dog"));
+console.log(test.get("lion"));
