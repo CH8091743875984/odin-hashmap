@@ -104,6 +104,7 @@ class HashMap {
 
   clear() {
     //removes all entries in the hash map.
+    this.buckets = new Array(this.size).fill(null).map(() => new LinkedList());
   }
 
   keys() {
@@ -185,3 +186,7 @@ console.log(test.has("this should not be in the list"));
 
 console.log("Test: entries");
 console.log(test.entries());
+
+// console.log("Test: clear");
+// test.clear();
+// console.log(test);
