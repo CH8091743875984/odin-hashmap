@@ -56,13 +56,21 @@ class HashMap {
     const bucketCount = this.buckets.length;
     const entryCount = this.length();
     const entryLimit = bucketCount * this.loadFactor;
-    const bucketsToAdd = Math.ceil(entryCount - entryLimit);
 
-    if (bucketsToAdd > 0) {
-      this.buckets.push(new LinkedList());
+    if (entryCount > entryLimit) {
+      //store the current entries
+      const savedEntries = this.entries();
+      //clear entries and create new buckets in double the original size
+      this.buckets = new Array(this.size * 2)
+        .fill(null)
+        .map(() => new LinkedList());
+      //add back in saved entries
+      savedEntries.forEach((entry) => {
+        this.set(entry[0], entry[1]);
+      });
+      //log new size
+      this.size = this.buckets.length;
     }
-
-    this.size = this.buckets.length;
   }
 
   has(key) {
@@ -158,7 +166,6 @@ test.set("ice cream", "white");
 test.set("jacket", "blue");
 test.set("kite", "pink");
 test.set("lion", "golden");
-// test.set("moon", "silver");
 console.log(test);
 
 console.log("Test: set with overwrite value");
@@ -190,3 +197,8 @@ console.log(test.entries());
 // console.log("Test: clear");
 // test.clear();
 // console.log(test);
+
+console.log("Test: resize (by adding one more entry to trigger it during set");
+test.set("moon", "silver");
+console.log(test.entries());
+console.log(test);
