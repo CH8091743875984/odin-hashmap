@@ -83,6 +83,12 @@ class HashMap {
     //takes a key as an argument.
     //If the given key is in the hash map, it should remove the entry with that key and return true.
     //If the key isn’t in the hash map, it should return false.
+    let bucket = this.buckets[this.hash(key)];
+    if (bucket) {
+      bucket.remove(key);
+      return true;
+    }
+    return false;
   }
 
   length() {
@@ -121,6 +127,15 @@ class HashMap {
   entries() {
     //returns an array that contains each key, value pair.
     //Example: [[firstKey, firstValue], [secondKey, secondValue]]
+    let array = [];
+    this.buckets.forEach((bucket) => {
+      let tmp = bucket.head;
+      while (tmp) {
+        array.push(tmp.data);
+        tmp = tmp.next;
+      }
+    });
+    return array;
   }
 }
 console.log("Test: create object");
@@ -162,3 +177,11 @@ console.log(test.get("lion"));
 console.log("Test: has");
 console.log(test.has("kite"));
 console.log(test.has("this should not be in the list"));
+
+// console.log("Test: remove");
+// console.log(test.remove("kite"));
+// console.log(test.remove("hey you cant delete me"));
+// console.log(test);
+
+console.log("Test: entries");
+console.log(test.entries());
