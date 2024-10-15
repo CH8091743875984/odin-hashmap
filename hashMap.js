@@ -51,6 +51,8 @@ class HashMap {
   }
 
   resize() {
+    //add buckets if entry limit is exceeded
+    //not in the assignment
     const bucketCount = this.buckets.length;
     const entryCount = this.length();
     const entryLimit = bucketCount * this.loadFactor;
@@ -66,6 +68,15 @@ class HashMap {
   has(key) {
     //takes a key as an argument
     //and returns true or false based on whether or not the key is in the hash map.
+    let bucket = this.buckets[this.hash(key)];
+    // console.log(bucket);
+    if (bucket) {
+      let node = bucket.find(key);
+      if (node) {
+        return true;
+      }
+    }
+    return false;
   }
 
   remove(key) {
@@ -147,3 +158,7 @@ console.log("Test: get");
 console.log(test.get("kite"));
 console.log(test.get("dog"));
 console.log(test.get("lion"));
+
+console.log("Test: has");
+console.log(test.has("kite"));
+console.log(test.has("this should not be in the list"));
